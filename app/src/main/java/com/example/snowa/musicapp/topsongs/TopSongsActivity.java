@@ -24,7 +24,7 @@ public class TopSongsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_top_songs);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        rwList = findViewById(R.id.rvList)
+        rvList = findViewById(R.id.rvList);
         Call<TrendingList> trendingListCall = ApiService.getService().getTrendingList("us",
                 "itunes", "singles");
         trendingListCall.enqueue(new Callback<TrendingList>()
