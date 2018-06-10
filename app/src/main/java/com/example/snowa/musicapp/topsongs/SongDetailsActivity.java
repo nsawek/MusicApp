@@ -64,8 +64,6 @@ ApiService.getService().
                     SongDetailsActivity.this, "Błąd pobierania danych: " + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
         }
     });
-
-
 }
 
 
