@@ -3,6 +3,8 @@ package com.example.snowa.musicapp.topsongs;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +44,7 @@ public class SongDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(track);
         getSupportActionBar().setSubtitle(artist);
 
+
         ApiService.getService().getTrack(trackId).enqueue(new Callback<Tracks>() {
             @Override
             public void onResponse(@NonNull Call<Tracks> call, @NonNull Response<Tracks> response) {
@@ -58,6 +61,12 @@ public class SongDetailsActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.favorite_menu, menu);
+        return true;
+    }
     private void showData(Track track) {
         TextView tvAlbum = findViewById(R.id.tvAlbum);
         TextView tvGenre = findViewById(R.id.tvGenre);
@@ -79,6 +88,7 @@ public class SongDetailsActivity extends AppCompatActivity {
         return true;
     }
 }
+
 
 
 
