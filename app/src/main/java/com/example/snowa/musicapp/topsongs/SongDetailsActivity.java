@@ -72,7 +72,7 @@ public class SongDetailsActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
-
+}
 
 
 
