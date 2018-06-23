@@ -3,10 +3,12 @@ package com.example.snowa.musicapp.topsongs;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.snowa.musicapp.R;
 import com.example.snowa.musicapp.api.ApiService;
+import com.example.snowa.musicapp.api.Track;
 import com.example.snowa.musicapp.api.Tracks;
 
 import retrofit2.Call;
@@ -37,6 +39,32 @@ public class SongDetailsActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle(track);
         getSupportActionBar().setSubtitle(artist);
+
+        ApiService.getService().getTrack(trackId).enqueue(new Callback<Tracks>() {
+            @Override
+            public void onResponse(@NonNull Call<Tracks> call, @NonNull Response<Tracks> response) {
+                Tracks tracks = response.body();
+                if (tracks != null && tracks.track.size() > 0) {
+                    showData(tracks.track.get(0));
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Tracks> call, @NonNull Throwable t) {
+                Toast.makeText(SongDetailsActivity.this, "Błąd pobierania danych: " + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void showData(Track track) {
+        TextView tvAlbum = findViewById(R.id.tvAlbum);
+        TextView tvGenre = findViewById(R.id.tvGenre);
+        TextView tvStyle = findViewById(R.id.tvStyle);
+        TextView tvDescription = findViewById(R.id.tvDescription);
+        tvAlbum.setText(track.strAlbum);
+        tvGenre.setText(track.strGenre);
+        tvStyle.setText(track.strStyle);
+        tvDescription.setText(track.strDescriptionEN);
     }
 
     @Override
@@ -46,25 +74,6 @@ public class SongDetailsActivity extends AppCompatActivity {
     }
 
 
-ApiService.getService().
-
-    getTrack(trackId).
-
-    enqueue(new Callback<Tracks>() {
-        @Override
-        public void onResponse (@NonNull Call < Tracks > call, @NonNull Response < Tracks >
-                response){
-            Toast.makeText(
-                    SongDetailsActivity.this, "Pobrano dane", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onFailure (@NonNull Call < Tracks > call, @NonNull Throwable t){
-            Toast.makeText(
-                    SongDetailsActivity.this, "Błąd pobierania danych: " + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-        }
-    });
-}
 
 
 
